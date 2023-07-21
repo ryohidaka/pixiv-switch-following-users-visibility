@@ -50,6 +50,14 @@ class AppClass:
         target_users_count = len(target_users)
         logger.info(f"Target['{target}']: {target_users_count} users.")
 
+        # Get diff
+        diff = [x for x in source_users if x not in target_users]
+        logger.info(f"Diff: {len(diff)} users.")
+
+        if (len(diff)) == 0:
+            logger.info("The process is ending because there is no difference.")
+            return
+
 
 if __name__ == "__main__":
     app = AppClass()
