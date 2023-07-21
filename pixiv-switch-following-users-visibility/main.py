@@ -1,6 +1,6 @@
 from utils.config import get_args
 from utils.logger import init_logger
-from utils.pixiv import init_api
+from utils.pixiv import get_following_users, init_api
 
 
 class AppClass:
@@ -34,6 +34,23 @@ class AppClass:
         # Get the mode.
         self.mode = args["mode"]
         self.logger.info(f"Mode: {self.mode}")
+
+        # Get the source users.
+        source_users = get_following_users(self, source)
+        source_users_count = len(source_users)
+        logger.info(f"Source['{source}']: {source_users_count} users.")
+        if (source_users_count) == 0:
+            logger.info(
+                f"The process is ending because there is no {source} following users."
+            )
+            return
+
+        # Get the target users.
+        target_users = get_following_users(self, target)
+        target_users_count = len(target_users)
+        logger.info(f"Target['{target}']: {target_users_count} users.")
+
+
 if __name__ == "__main__":
     app = AppClass()
     app.main()
