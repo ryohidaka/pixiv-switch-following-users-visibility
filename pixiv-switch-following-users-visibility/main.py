@@ -1,6 +1,6 @@
 from utils.config import get_args
 from utils.logger import init_logger
-from utils.pixiv import get_following_users, init_api
+from utils.pixiv import follow_user, get_following_users, init_api
 
 
 class AppClass:
@@ -57,6 +57,9 @@ class AppClass:
         if (len(diff)) == 0:
             logger.info("The process is ending because there is no difference.")
             return
+
+        # Move or Copy users
+        follow_user(self, diff)
 
 
 if __name__ == "__main__":

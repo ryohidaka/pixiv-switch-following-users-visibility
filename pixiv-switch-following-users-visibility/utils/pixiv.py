@@ -63,3 +63,34 @@ def get_following_users(self, restrict):
     logger.info("[End] Get the list of users who the target user is following.")
 
     return users
+
+
+def follow_user(self, user_ids):
+    """
+    Follow a list of users.
+    """
+    api = self.api
+    logger = self.logger
+
+    is_move = self.mode == "move"
+
+    while True:
+        try:
+            for user_id in user_ids:
+                if is_move:
+                    api.user_follow_delete(user_id, self.target)
+                    time.sleep(2)
+
+                    api.user_follow_add(user_id, self.target)
+                    time.sleep(2)
+
+                    logger.info(f"Move User: {user_id}")
+                else:
+                    api.user_follow_add(user_id, self.target)
+                    time.sleep(2)
+
+                    logger.info(f"Follow User: {user_id}")
+
+        except Exception as e:
+            logger.error("Failed to follow or unfollow the user.:", str(e))
+            break
